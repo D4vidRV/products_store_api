@@ -23,11 +23,10 @@ export class AuthService {
 
   async create(createUserDto: CreateUserDto) {
     try {
-      const { password, email, ...userData } = createUserDto;
+      const { password, ...userData } = createUserDto;
 
       const user = this.userRepository.create({
         ...userData,
-        email,
         password: bcrypt.hashSync(password, 10),
       });
 
@@ -37,11 +36,22 @@ export class AuthService {
 
       return {
         ...user,
-        token: this.getJwtToken({ email: user.email }),
+        token: this.getJwtToken({ id: user.id }),
       };
     } catch (error) {
       this.handleExceptions(error);
     }
+  }
+
+  async checkAuthStatus(user: User) {
+    const { id, ...userData } = user;
+
+    const jwToken = this.getJwtToken({ id });
+
+    return {
+      id,
+      jwToken,
+    };
   }
 
   async login(loginUserDto: LoginUserDto) {
@@ -49,7 +59,7 @@ export class AuthService {
 
     const user = await this.userRepository.findOne({
       where: { email },
-      select: { email: true, password: true },
+      select: { id: true, email: true, password: true },
     });
 
     // If email doesn`t match
@@ -61,9 +71,10 @@ export class AuthService {
     }
 
     delete user.password;
+    delete user.email;
     return {
       ...user,
-      token: this.getJwtToken({ email: user.email }),
+      token: this.getJwtToken({ id: user.id }),
     };
   }
 
