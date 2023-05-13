@@ -3,6 +3,7 @@
 </p>
 
 # Products API
+## Restful api for managing a store's products
 
 1. Clone the project
 2. `pnpm install`
