@@ -6,11 +6,11 @@
 ## Restful api for managing a store's products
 
 1. Clone the project
-2. `pnpm install`
+2. `yarn install`
 3. Rename .env.example and setup your variables
 4. Run database with:
    `docker-compose up -d`
-5. Run `pnpm start:dev`
+5. Run `yarn start:dev`
 6. Make GET request to '.../api/seed' endpoint
 
 ## License
