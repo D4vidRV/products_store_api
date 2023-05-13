@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    container_name: teslodb
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data

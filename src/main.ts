@@ -10,13 +10,14 @@ async function bootstrap() {
   // Prefix /api....
   app.setGlobalPrefix('api');
 
-  // Validations in input data request
+  // *********DTO VALIDATIONS********
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
     }),
   );
+  // *********DTO VALIDATIONS********
 
   // ******SWAGGER******
   const config = new DocumentBuilder()
